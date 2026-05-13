@@ -1,0 +1,59 @@
+[project]
+name = "mailbuttons"
+version = "0.1.0"
+description = "Official SDK for mailbuttons — email for AI agents with policy enforcement."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Mailbuttons" }]
+keywords = ["mailbuttons", "email", "agents", "ai", "jmap", "webhook"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Communications :: Email",
+    "Typing :: Typed",
+]
+dependencies = [
+    "httpx>=0.27",
+    "pydantic>=2.6",
+]
+
+[project.urls]
+Homepage = "https://mailbuttons.com"
+Repository = "https://github.com/mailbuttons/sdk-python"
+Issues = "https://github.com/mailbuttons/sdk-python/issues"
+Changelog = "https://github.com/mailbuttons/sdk-python/blob/main/CHANGELOG.md"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "pytest-asyncio>=0.23",
+    "respx>=0.21",
+    "ruff>=0.4",
+    "pyright>=1.1.350",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mailbuttons"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "README.md", "CHANGELOG.md", "LICENSE", "pyproject.toml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.pyright]
+include = ["src", "tests"]
+strict = ["src"]
+pythonVersion = "3.11"
+reportMissingImports = "error"
+reportMissingTypeStubs = "none"

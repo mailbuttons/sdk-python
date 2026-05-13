@@ -1,0 +1,48 @@
+name: Publish to PyPI
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    name: Build and publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: Install dev dependencies
+        run: uv sync --extra dev
+
+      - name: Run tests
+        run: uv run pytest -q
+
+      - name: Type check
+        run: uv run pyright
+
+      - name: Lint
+        run: uv run ruff check .
+
+      - name: Build sdist and wheel
+        run: uv build
+
+      - name: Verify tag matches package version
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          pkg_version=$(uv run python -c 'import tomllib; print(tomllib.load(open("pyproject.toml","rb"))["project"]["version"])')
+          if [ "$tag" != "$pkg_version" ]; then
+            echo "::error::release tag '$tag' does not match pyproject version '$pkg_version'"
+            exit 1
+          fi
+
+      - name: Publish to PyPI via trusted publisher
+        uses: pypa/gh-action-pypi-publish@release/v1

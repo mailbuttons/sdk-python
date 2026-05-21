@@ -34,7 +34,8 @@ class AuditEntry(BaseModel):
     thread_id: str | None = None
     sender_address: str | None = None
     recipient_address: str | None = None
-    received_at: int
+    received_at: str
+    """ISO-8601 UTC timestamp."""
     outcome: AuditOutcome
     reason: str | None = None
     verification_dkim: Verdict | None = None

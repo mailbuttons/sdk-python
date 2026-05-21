@@ -13,3 +13,6 @@ htmlcov/
 .DS_Store
 .vscode/
 .idea/
+
+# uv lock file — not committed for a library
+uv.lock

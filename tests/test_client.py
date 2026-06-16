@@ -163,7 +163,7 @@ async def test_get_audit_log_encodes_filters_and_parses_response() -> None:
                     "thread_id": "t1",
                     "sender_address": "alice@example.com",
                     "recipient_address": "bot@mailbox.com",
-                    "received_at": 1700000000,
+                    "received_at": "2023-11-14T22:13:20Z",
                     "outcome": "delivered",
                     "reason": None,
                     "verification_dkim": "pass",

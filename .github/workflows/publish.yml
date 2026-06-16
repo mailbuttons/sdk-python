@@ -18,7 +18,9 @@ jobs:
       - name: Set up uv
         uses: astral-sh/setup-uv@v3
         with:
-          enable-cache: true
+          # uv.lock is intentionally not committed for this library, so the
+          # lockfile-based cache has nothing to key on. Disable it.
+          enable-cache: false
 
       - name: Install dev dependencies
         run: uv sync --extra dev
